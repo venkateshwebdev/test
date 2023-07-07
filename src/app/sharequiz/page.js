@@ -12,11 +12,12 @@ const ShareQuiz = () => {
         const raw = await fetch("/api/getquiz",{method:"POST",headers:{"Content-Type": "application/json"},body:JSON.stringify(user)})
         const res = await raw.json()
         console.log(res)
-        console.log(user)
+        // console.log(user)
+        setQuizData
     }
     return (
         <div className={styles.container}>
-            
+            <div></div>
         </div>
     );
 }
