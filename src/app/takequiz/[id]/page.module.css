@@ -1,0 +1,66 @@
+.container{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1939;
+    color: white;
+    overflow:hidden;
+}
+.playerInput{
+        background-color: transparent;
+        border:2px solid gray;
+        border-radius: 10px;
+        height: 50px;
+        width: 300px;
+}
+/* .options > input{
+    border: 2px solid red;
+    background-color: transparent;
+    outline: none;
+    background-color: red;
+} */
+.question{
+    font-size: 42px;
+}
+.wrap{
+    position: relative;
+}
+.animated{
+    position: relative;
+    animation: myan 2s ease-in;
+}
+.navbar{
+    position: absolute;
+    top: 0%;
+    margin: 0 10%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+}
+.navButtons > button{
+    background-color: transparent;
+    color: greenyellow;
+}
+.navButtons > button:hover{
+    background-color: greenyellow;
+    color: #000;
+}
+.navButtons{
+    display: flex;
+    gap: 20px;
+}
+
+@keyframes myan {
+    0%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 1;
+    }
+  }
