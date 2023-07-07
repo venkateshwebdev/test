@@ -1,0 +1,37 @@
+.container{
+    height: 100vh;
+    color: white;
+    padding:0 10%;
+}
+.main{
+    width: 100%;
+}
+.box{
+    border: 1px solid grey;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: space-between;
+}
+.particpantsBox{
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+}
+.hide{
+    display: none;
+}
+.theBox{
+    display: flex;
+    justify-content:center;
+    flex-direction: column;
+    text-align: left;
+    border-radius: 10px;
+    margin: 5px 80px;
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.152);
+}

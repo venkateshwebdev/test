@@ -13,8 +13,11 @@ const QuestionComponent = ({qn}) => {
     const [o4,setO4] = useState("")
     const [ans,setAns] = useState('')
     const handleQuestions=()=>{
+        const user = localStorage.getItem("user")
         setAnimate(true)
-        const data = {question:q,options:[o1,o2,o3,o4],answer:ans}
+        const ansList = ans.split("")
+        console.log(ansList)
+        const data = {createdBy:user,question:q,options:[o1,o2,o3,o4],answer:ansList}
         // console.log(data)
         setQuestions(prev=>[...prev,data])
         // console.log(questions)
@@ -43,17 +46,20 @@ const QuestionComponent = ({qn}) => {
     }
     return (
         <div className={`${styles.container}`}>
-            <div className={animate&&styles.animated}>
-            <div className={`${styles.question} ${styles.inputs}`}>{questions.length+1} . <input type='text' onChange={(e)=>{setQ(e.target.value);setAnimate(false)}} value={q} placeholder='Write Your Question Here.'/></div>
+            <div className={styles.submitQuiz}><button onClick={handleTest}>That's it Share Test Link</button></div>
+            <div className={`${animate&&styles.animated}`}>
+            <div className={styles.anm}>
+            <div className={`${styles.question} ${styles.inputs}`}><div>{questions.length+1}</div><input type='text' onChange={(e)=>{setQ(e.target.value);setAnimate(false)}} value={q} placeholder='Write Your Question Here.'/></div>
+            <div className={styles.optionsContainer}>
             <div className={`${styles.options} ${styles.inputs}`}>A . <input  type='text' onChange={(e)=>setO1(e.target.value)} value={o1}  placeholder='GIve options' /></div>
             <div className={`${styles.options} ${styles.inputs}`}>B . <input  type='text' onChange={(e)=>setO2(e.target.value)} value={o2} placeholder='GIve options' /></div>
             <div className={`${styles.options} ${styles.inputs}`}>C . <input  type='text' onChange={(e)=>setO3(e.target.value)} value={o3} placeholder='GIve options' /></div>
             <div className={`${styles.options} ${styles.inputs}`}>D . <input  type='text' onChange={(e)=>setO4(e.target.value)} value={o4} placeholder='GIve options' /></div>
+            </div>
             <div className={`${styles.answer} ${styles.inputs}`}><input  type='text' onChange={(e)=>setAns(e.target.value)} value={ans}  placeholder='Give correct option' /></div>
             <div><button onClick={handleQuestions}>Add Question</button></div>
-            <div><button onClick={handleTest}>That's it Share Test Link</button></div>
-            <Link href={`takequiz/${resData?.data?._id}`}>take Quiz</Link>
         </div> 
+        </div>
         </div>
     );
 }

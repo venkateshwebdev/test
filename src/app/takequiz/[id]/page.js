@@ -2,8 +2,11 @@
 import { useRouter } from 'next/router';
 import styles from './page.module.css'
 import { useEffect, useState } from "react";
+import { BiWorld } from 'react-icons/bi';
 const TakeQuiz = ({params}) => {
     const param = params
+    const [isModal,setIsModal] = useState(false)
+    const [correct,setCorrect] = useState(0)
     const [player, setPlayer] = useState();
     const [pName,setPName] = useState("")
     const [answers,setAnswers] = useState([])
@@ -35,7 +38,6 @@ const TakeQuiz = ({params}) => {
         if(o2) selectedAnswers.push("b");
         if(o3) selectedAnswers.push("c");
         if(o4) selectedAnswers.push("d");
-
         setAnswers(prev => [...prev, selectedAnswers])
         setO1("")
         setO2("")
@@ -46,28 +48,61 @@ const TakeQuiz = ({params}) => {
         localStorage.setItem("player",pName)
         const p = localStorage.getItem("player")
         setPlayer(p)
+        setPName("")
+    }
+    const checkCorrectAnswers = (expected, given) => {
+        if(expected.length !== given.length) return false;
+       for(let i = 0; i < expected.length; i++) {
+        if(expected[i] !== given[i]) return false;
+       }
+       return true;
+    }
+    const submitQuiz = async()=>{
+        answers.map((e,i)=>{
+            console.log(e , quizData[i].answer)
+            if(checkCorrectAnswers(quizData[i].answer, e)){
+                setCorrect(prev=>prev+1)
+            }
+        })
+        setIsModal(prev=>!prev)
+        sendData()
+    }
+    const sendData = async()=>{
+        const finalData = {name:player,result:correct,id:param.id}
+        console.log(finalData)
+        const result = await fetch("/api/getresult",{method:"POST",headers:{"Content-Type": "application/json"},body:JSON.stringify({finalData})})
+        const finalscore = await result.json()
+        console.log("YAAAAAAAAAAAAAAAAY....! you Got " , finalscore +"/"+quizData.length)
     }
     console.log("this is" , quizData)
+    console.log("correct answers" , correct)
+    console.log("answers are", answers)
+    const done = ()=>{
+        setPlayer("");
+        localStorage.setItem("player","")
+    }
      return (
         !player?
         <div className={`${styles.container}`}>
-            <div>
-            Full Name :
-            <input className={styles.playerInput} onChange={(e)=>setPName(e.target.value)} value={pName} type='text' />
-            </div>
+            <div className={styles.playerLogin}>
+            Full Name*
+            <input className={styles.playerInput} onChange={(e)=>setPName(e.target.value)} value={pName} type='text' placeholder='example' />
             <button onClick={handlePlayer}>Go to Quiz</button>
+            </div>
         </div>
 
             :<div className={`${styles.container}`}>
-            <div className={styles.navbar}><div>{player}</div><div className={styles.navButtons}><button>00:12</button><button onClick={()=>{setPlayer("");localStorage.setItem("player","")}}>Submit Quiz</button></div></div>
+            {isModal&&<div className={styles.modal}><BiWorld />{correct}<button onClick={done}>Done</button></div>}
+            <div className={styles.navbar}><div>{player}</div><div className={styles.navButtons}><button onClick={submitQuiz}>Submit Quiz</button></div></div>
                 <div className={animate&&styles.animated}>
-                <div className={`${styles.question}`}>{qn+1} .{quizData?.[qn]?.question}</div>
-                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <input onChange={(e)=>{setO1(e.target.checked)}} checked={o1} type="checkbox"/> A . {quizData?.[qn]?.options[0]}</div>
-                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <input onChange={(e)=>{setO2(e.target.checked)}} checked={o2} type="checkbox"/> B . {quizData?.[qn]?.options[1]}</div>
-                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <input onChange={(e)=>{setO3(e.target.checked)}} checked={o3} type="checkbox"/> C . {quizData?.[qn]?.options[2]}</div>
-                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <input onChange={(e)=>{setO4(e.target.checked)}} checked={o4} type="checkbox"/> D . {quizData?.[qn]?.options[3]}</div>
+                    <div className={styles.anm}>
+                <div className={`${styles.question} ${styles.options}`}>{qn+1} .{quizData?.[qn]?.question}</div>
+                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <div className={!o1?styles.checkBox:styles.checkedBox} onClick={()=>{setO1(prev=>!prev)}}> </div>{quizData?.[qn]?.options[0]}</div>
+                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <div className={!o2?styles.checkBox:styles.checkedBox} onClick={()=>{setO2(prev=>!prev)}}> </div>{quizData?.[qn]?.options[1]}</div>
+                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <div className={!o3?styles.checkBox:styles.checkedBox} onClick={()=>{setO3(prev=>!prev)}}> </div>{quizData?.[qn]?.options[2]}</div>
+                <div className={`${styles.options}`} onClick={()=>setAnimate(false)}> <div className={!o4?styles.checkBox:styles.checkedBox} onClick={()=>{setO4(prev=>!prev)}}> </div>{quizData?.[qn]?.options[3]}</div>
                 <div><button onClick={submitQuestion}>Next Question</button></div>
-                <a>{answers}</a>
+                </div>
             </div> 
             </div>
         );

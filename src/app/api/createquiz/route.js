@@ -7,7 +7,7 @@ export async function POST(req){
     // const questionList = JSON.parse(questions)
     // console.log(questionList)
     await Quiz.create({
-        createdBy:"Nikhil",
+        createdBy:questions.createdBy,
         questions:questions,
         participants: []
     })

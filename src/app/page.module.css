@@ -1,20 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Playfair+Display&family=Poppins&display=swap');
 .container{
     height: 100vh;
     padding: 7% 10%;
 }
+.title{
+font-family: 'Cedarville Cursive', cursive;
+font-size: 72px;
+font-weight: 900;
+}
+
 .content{
     height: 100%;
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
-    background-color: #1a1939;
-    border-radius: 30px;
+    background-color: greenyellow;
 }
 .about{
-    background-color: #1a1939;
+    background-color: greenyellow;
 }
-.loginForm{
-    background-color: white;
+
+.formContainer > form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.formContainer > form > input{
+    background-color: transparent;
+    border:2px solid gray;
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px 20px;
 }
 .sub{
     height: 100%;
@@ -22,6 +39,48 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 20px;
+}
+.loginForm{
+    background-color: rgb(234, 251, 216);
+    border-bottom-right-radius: 100px;
+}
+
+.formContainer{
     border-radius: 30px;
-    border: 5px solid #1a1939;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 5px solid greenyellow; */
+}
+.disabled{
+    background-color: rgba(128, 128, 128, 0.352);
+    border: none;
+}
+.disabled:hover{
+    background-color: rgba(128, 128, 128, 0.358);
+    border: none;
+    color: black;
+}
+.checkBox{
+    height: 20px;
+    width: 20px;
+    border: 2px solid black;
+    border-radius: 30px;
+}
+.checkedBox{
+    background-color: greenyellow;
+    height: 20px;
+    width: 20px;
+    border: 2px solid black;
+    border-radius: 30px;
+}
+.b{
+    width: 100%;
+}
+.b:hover{
+    /* background-color: greenyellow; */
+    color: #000;
 }
